@@ -1,4 +1,4 @@
-package com.gambit.Gambit.Services;
+package com.gambit.Gambit.services;
 
 import com.gambit.Gambit.dtos.SignUpDto;
 import com.gambit.Gambit.models.User;

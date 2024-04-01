@@ -30,7 +30,8 @@ public class AuthConfig {
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/api/v1/auth/*").permitAll()
             .requestMatchers(HttpMethod.GET, "/error").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/v1/books").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.GET, "/upload/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/upload/**").permitAll()
             .anyRequest().authenticated())
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
