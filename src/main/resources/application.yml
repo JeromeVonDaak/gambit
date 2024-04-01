@@ -1,0 +1,5 @@
+# Teil der JWT Token Guilde -> https://dev.to/m1guelsb/authentication-and-authorization-with-spring-boot-4m2n
+security:
+  jwt:
+    token:
+      secret-key: ${JWT_SECRET}
