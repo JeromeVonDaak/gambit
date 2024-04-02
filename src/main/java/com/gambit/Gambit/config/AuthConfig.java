@@ -29,9 +29,15 @@ public class AuthConfig {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/api/v1/auth/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/login").permitAll()
+            .requestMatchers(HttpMethod.GET, "/register").permitAll()
+
+            .requestMatchers(HttpMethod.GET, "/register").hasRole("USER")
+
             .requestMatchers(HttpMethod.GET, "/error").permitAll()
             .requestMatchers(HttpMethod.GET, "/upload/**").permitAll()
             .requestMatchers(HttpMethod.POST, "/upload/**").permitAll()
+
             .anyRequest().authenticated())
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
         .build();

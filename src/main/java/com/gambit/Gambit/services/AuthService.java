@@ -2,6 +2,7 @@ package com.gambit.Gambit.services;
 
 import com.gambit.Gambit.dtos.SignUpDto;
 import com.gambit.Gambit.models.User;
+import com.gambit.Gambit.models.UserRole;
 import com.gambit.Gambit.repos.UserRep;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,7 +28,7 @@ public class AuthService implements UserDetailsService {
       throw new Exception("Username already exists");
     }
     String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-    User newUser = new User(data.login(), encryptedPassword, data.role());
+    User newUser = new User(data.login(), encryptedPassword, UserRole.USER);
     return repository.save(newUser);
   }
 }

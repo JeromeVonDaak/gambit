@@ -6,15 +6,18 @@ import com.gambit.Gambit.dtos.JwtDto;
 import com.gambit.Gambit.dtos.SignInDto;
 import com.gambit.Gambit.dtos.SignUpDto;
 import com.gambit.Gambit.models.User;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 // controllers/AuthController.java
 @RestController
@@ -47,5 +50,28 @@ public class AuthController {
     }catch (Exception e){
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+  }
+
+  @PostMapping("/signinhtml")
+  public RedirectView signInHtml( HttpServletResponse response, @RequestParam("username") String username, @RequestParam("password") String password){
+    SignInDto data = new SignInDto(username, password);
+
+    try {
+      String jwtaccess = signIn(data).getBody().accessToken();
+      Cookie cookie = new Cookie("accessToken", jwtaccess);
+      cookie.setPath("/");
+      cookie.setMaxAge(2 * 60 * 60);
+      response.addCookie(cookie);
+      return new RedirectView("/home");
+    }catch (Exception e){
+      return new RedirectView("/login");
+    }
+  }
+
+  @PostMapping("/signuphtml")
+  public RedirectView signUpHtml( @RequestParam("username") String username, @RequestParam("password") String password){
+    SignUpDto data = new SignUpDto(username, password);
+    signUp(data);
+    return new RedirectView("/login");
   }
 }

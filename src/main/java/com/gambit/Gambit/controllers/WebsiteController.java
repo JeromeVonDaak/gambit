@@ -1,10 +1,8 @@
 package com.gambit.Gambit.controllers;
 
-import com.gambit.Gambit.models.*;
 import com.gambit.Gambit.repos.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,4 +36,14 @@ public class WebsiteController {
     @Autowired
     private VideosRep videosRepository;
 
+    @GetMapping("/login")
+    public String login(){
+        return "loginSite";
+    }
+
+    @GetMapping("/register")
+    public String register(){return "registerSite";}
+
+    @GetMapping("/home")
+    public String home(){return "homeSite";}
 }
